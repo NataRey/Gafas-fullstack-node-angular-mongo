@@ -1,0 +1,25 @@
+nav {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+}
+
+h2{
+  color: orange;
+}
+
+.navbar a{
+  font-size: 25px;
+  text-decoration: none;
+  margin-left: 50px;
+  color: orange;
+}
+
+.navbar a:last-child{
+  background: orange;
+  color: white;
+  padding: 5px 20px;
+  border-radius: 20px;
+}
