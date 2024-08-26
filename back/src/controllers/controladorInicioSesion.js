@@ -7,29 +7,33 @@ const ControladorInicioSesion = {
     try {
       const { username, password } = solicitud.body;
       const usuarioEncontrado = await ModeloUsuario.findOne({
-        correoElectronico: username,
+      correoElectronico: username,
       });
       const contraseniaValidada = await bcryptjs.compare(
-        password,
-        usuarioEncontrado.contrasenia
-      );
-      if (contraseniaValidada) {
-        const token = await generarToken({
-          id: usuarioEncontrado._id,
-          name: usuarioEncontrado.nombre,
-        });
-        respuesta.json({
-          resultado: 'bien',
-          mensaje: 'acceso permitido',
-          datos: token,
-        });
-      } else {
-        respuesta.json({
-          resultado: 'mal',
-          mensaje: 'acceso denegado',
-          datos: null,
-        });
-      }
+         password,
+         usuarioEncontrado.contrasenia
+       );
+        if (contraseniaValidada) {
+          respuesta.json({
+            resultado: 'bien',
+            mensaje: 'acceso permitido',
+            datos: usuarioEncontrado._id,
+            });
+
+          } else {
+            respuesta.json({
+            resultado: 'mal',
+            mensaje: 'acceso denegado',
+            datos: null,
+             });
+           }
+
+          const token = await generarToken({
+            id: usuarioEncontrado._id,
+            name: usuarioEncontrado.nombre,
+          });
+        
+        
     } catch (error) {
       respuesta.json({
         resultado: 'mal',
@@ -38,31 +42,31 @@ const ControladorInicioSesion = {
       });
     }
   },
-  validarToken: async (solicitud, respuesta) => {
-    try {
-      const token = solicitud.params.token;
-      const decodificado = await verificarToken(token);
-      if (decodificado.id) {
-        respuesta.json({
-          resultado: 'bien',
-          mensaje: 'token válido',
-          datos: decodificado,
-        });
-      } else {
+    validarToken: async (solicitud, respuesta) => {
+      try {
+        const token = solicitud.params.token;
+        const decodificado = await verificarToken(token);
+        if (decodificado.id) {
+          respuesta.json({
+            resultado: 'bien',
+            mensaje: 'token válido',
+            datos: decodificado,
+          });
+        } else {
+          respuesta.json({
+            resultado: 'mal',
+            mensaje: 'token no válido',
+            datos: null,
+          });
+        }
+      } catch (error) {
         respuesta.json({
           resultado: 'mal',
-          mensaje: 'token no válido',
-          datos: null,
+          mensaje: 'ocurrió un error al validar token',
+          datos: error,
         });
       }
-    } catch (error) {
-      respuesta.json({
-        resultado: 'mal',
-        mensaje: 'ocurrió un error al validar token',
-        datos: error,
-      });
-    }
-  },
+    },
 };
 
 export default ControladorInicioSesion;

@@ -21,13 +21,10 @@ const ControladorProductos = {
           });
         } else {
           const nuevaProductos = new ModeloProducto({
-            modelo: solicitud.body.modelo,
             marca: solicitud.body.marca,
-            material: solicitud.body.material,
+            nombre: solicitud.body.material,
             precio: solicitud.body.precio,
             color: solicitud.body.color,
-            disponibilidad: solicitud.body.disponibilidad,
-            fechaIngreso: solicitud.body.fechaIngreso,
             imagen: solicitud.file.filename,
           });
           const ProductosCreada = await nuevaProductos.save();
