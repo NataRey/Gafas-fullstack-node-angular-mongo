@@ -1,19 +1,39 @@
 <div class="d-flex justify-content-center flex-column align-items-center container mt-5">
   <h3>Inicio de Sesión</h3>
+  <div class="border p-5 rounded shadow">
   
-  <form class="border p-5 rounded shadow">
-    <!-- email -->
+    <form [formGroup]="credentialForm" (ngSubmit)="handleSubmit()">
+      <!--correo-->
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <input 
+      type="email" 
+      class="form-control" 
+      id="exampleInputEmail1" 
+      aria-describedby="emailHelp"
+      placeholder="ingrese su correo"
+       formControlName="username"> 
     </div>
-  
-    <!-- password -->
+  <!--password-->
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Constraseña</label>
-      <input type="password" class="form-control" id="exampleInputPassword1">
+     <input 
+      type="password" 
+      class="form-control" 
+      id="exampleInputPassword1"
+      placeholder="password"
+      formControlName="password"> 
     </div>
     
-    <button type="submit" class="btn btn-warning text-white">Ingresar</button>
-  </form>
+    <button 
+    type="submit" 
+    class="btn btn-warning text-white">
+    Ingresar
+  </button>
+  <!--registrarse-->
+  <div class="links text-center ">
+    <a href="http://localhost:4200/register">Registarse</a>
+  </div>
+  </form> 
+</div>
 </div>

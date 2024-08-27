@@ -6,4 +6,4 @@ const esquemaUsuario = new Schema({
   contrasenia: { type: String, required: true },
 });
 
-export default model('Usuario', esquemaUsuario);
+export default model('usuarios', esquemaUsuario);

@@ -1,35 +1,45 @@
 import bcrypt from 'bcryptjs';
-import ModeloUsuario from '../models/modeloUsuario.js';
+//import ModeloUsuario from '../models/modeloUsuario.js';
+import esquemaUsuario from '../models/modeloUsuario.js';
+
 
 const ControladorUsuarios = {
-  crearUsuario: async (solicitud, respuesta) => {
-    try {
-      const { nombre, correoElectronico, contrasenia } = solicitud.body;
-      const contraseniaProtegida = await bcrypt.hash(contrasenia, 10);
-      const nuevoUsuario = new ModeloUsuario({
-        nombre,
-        correoElectronico,
-        contrasenia: contraseniaProtegida,
-      });
-      const usuarioCreado = await nuevoUsuario.save();
-      if (usuarioCreado._id) {
-        respuesta.json({
-          resultado: 'bien',
-          mensaje: 'usuario creado',
-          datos: usuarioCreado._id,
-        });
-      }
-    } catch (error) {
-      respuesta.json({
-        resultado: 'mal',
-        mensaje: 'ocurrió un error al crear usuario',
-        datos: error,
-      });
-    }
-  },
+   crearUsuario: async (solicitud, respuesta) => {
+     try {
+       const {nombre, correoElectronico, contrasenia} = solicitud.body;
+       console.log(solicitud.body);
+       const contraseniaProtegida = await bcrypt.hash(contrasenia, 10);
+       const nuevoUsuario = new esquemaUsuario({
+         nombre,
+         correoElectronico,
+         contrasenia: contraseniaProtegida,
+       });
+       console.log(nuevoUsuario);
+       const usuarioCreado = await nuevoUsuario.save();
+       if (usuarioCreado._id) {
+         respuesta.json({
+           resultado: 'bien',
+           mensaje: 'usuario creado',
+           datos: usuarioCreado._id,
+         });
+       }
+     } catch (error) {
+       respuesta.json({
+         resultado: 'mal',
+         mensaje: 'ocurrió un error al crear usuario',
+         datos: error,
+       });
+     }
+   },
+
+  // crearUsuario: async (solicitud,respuesta)=>{
+  //   const {nombre, correoElectronico, contrasenia} = solicitud.body;
+  //   respuesta.send("hola desde POST");
+  //   console.log(solicitud.body);
+  // },
   leerUsuario: async (solicitud, respuesta) => {
     try {
-      const usuarioEncontrado = await ModeloUsuario.findById(
+      const usuarioEncontrado = await esquemaUsuario.findById(
         solicitud.params.id
       );
       if (usuarioEncontrado._id) {
@@ -49,7 +59,7 @@ const ControladorUsuarios = {
   },
   leerUsuarios: async (solicitud, respuesta) => {
     try {
-      const todosLosUsuarios = await ModeloUsuario.find();
+      const todosLosUsuarios = await esquemaUsuario.find();
       respuesta.json({
         resultado: 'bien',
         mensaje: 'usuarios leídos',
@@ -65,7 +75,7 @@ const ControladorUsuarios = {
   },
   actualizarUsuario: async (solicitud, respuesta) => {
     try {
-      const usuarioActualizado = await ModeloUsuario.findByIdAndUpdate(
+      const usuarioActualizado = await esquemaUsuario.findByIdAndUpdate(
         solicitud.params.id,
         solicitud.body
       );
@@ -86,7 +96,7 @@ const ControladorUsuarios = {
   },
   eliminarUsuario: async (solicitud, respuesta) => {
     try {
-      const usuarioEliminado = await ModeloUsuario.findByIdAndDelete(
+      const usuarioEliminado = await esquemaUsuario.findByIdAndDelete(
         solicitud.params.id
       );
       if (usuarioEliminado._id) {

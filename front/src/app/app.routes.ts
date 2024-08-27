@@ -1,41 +1,40 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProductsComponent } from './components/products/products.component';
-import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
+import { PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
-  {
-    path: "login",
-    component: LoginComponent,
-    title: "Inicio de Sesión"
+  { 
+    path: 'home',
+    title: 'Inicio',
+    component: HomeComponent
   },
   {
-    path: "productos",
+    path: 'shop',
+    title: 'Productos',
     component: ProductsComponent,
-    title: "Productos"
   },
   {
-    path: "inicio",
-    component: HomeComponent,
-    title: "Inicio"
+    path: 'register',
+    title: 'Registrarse',
+    component: RegisterComponent
   },
   {
-    path: "register",
-    component: RegisterComponent,
-    title: "Registrarse"
+    path: 'login',
+    title: 'Inciar-sesion',
+    component: LoginComponent
   },
   {
-    path: "",
-    redirectTo: "inicio",
+    path: '',
+    redirectTo: 'home',
     pathMatch: "full"
   },
-  // {
-  //   path: "**",
-  //   component: NotFoundComponent,
-  //   title: "Not Found"
-  // },
-
-
+  {
+     path: "**",
+     component: PageNotFoundComponent,
+     title: "404- Page Not Found"
+  },
 
 ];
